@@ -8,25 +8,30 @@ import org.ysc.database.factory.DBSessionFactory;
 import org.ysc.database.model.Match;
 
 public class MatchDAO {
-	
-	public void create(Match match){
+
+	public void create(Match match) {
 		Session session = DBSessionFactory.getNewSession();
 		Transaction tx = null;
 		tx = session.beginTransaction();
 		session.save(match);
-		tx.commit();		
+		try {
+			tx.commit();
+		} catch (org.hibernate.exception.ConstraintViolationException e) {
+			
+		}
+
 		session.close();
 	}
-	
-	public Match retrieve(){
+
+/*	public Match retrieve() {
 		return null;
 	}
-	
-	public void update(){
-		
+
+	public void update() {
+
 	}
-	
-	public void delete(){
-		
-	}
+
+	public void delete() {
+
+	}*/
 }
