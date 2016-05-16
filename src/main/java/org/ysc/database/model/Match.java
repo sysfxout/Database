@@ -29,12 +29,36 @@ public class Match {
 	private int day;
 	@Column(name = "game")
 	private int game;
-	
-	public void initId(){
-		id = tournamentId+""+year+""+region+"W"+week+"D"+day+"G"+game;
+
+	public void initId() {
+		id = tournamentId + "" + year + "" + region + "W" + week + "D" + day + "G" + game;
+	}
+
+	private void setAcsURL() {
+		switch (matchURL) {
+		case "http://matchhistory.na.leagueoflegends.com/en/#match-details":
+			acsURL = matchURL.replace("http://matchhistory.na.leagueoflegends.com/en/#match-details",
+					"https://acs.leagueoflegends.com/v1/stats/game");
+			break;
+		case "http://matchhistory.eune.leagueoflegends.com/en/#match-details":
+			acsURL = acsURL.replace("http://matchhistory.eune.leagueoflegends.com/en/#match-details",
+					"https://acs.leagueoflegends.com/v1/stats/game");
+			break;
+		case "http://matchhistory.na.leagueoflegends.com/en/#match-details/":
+			acsURL = acsURL.replace("http://matchhistory.na.leagueoflegends.com/en/#match-details/",
+					"https://acs.leagueoflegends.com/v1/stats/game");
+			break;
+		default:
+			acsURL = "UNHANDLED URL: " + matchURL;
+			break;
+		}
+
+		acsURL = acsURL.replace("&tab=overview", "");
+		acsURL = acsURL.replace("&participant=10", "");
 	}
 	
-	private String getId(){
+	//Getter/Setter
+	public String getId() {
 		return id;
 	}
 
@@ -88,6 +112,7 @@ public class Match {
 
 	public void setMatchURL(String matchURL) {
 		this.matchURL = matchURL;
+		setAcsURL();
 	}
 
 	public String getAcsURL() {
@@ -124,9 +149,8 @@ public class Match {
 
 	@Override
 	public String toString() {
-		return "Match [tournamentId=" + tournamentId + ", year=" + year
-				+ ", region=" + region + ", team1=" + team1 + ", team2="
-				+ team2 + ", matchURL=" + matchURL + ", acsURL=" + acsURL
-				+ ", week=" + week + ", day=" + day + ", game=" + game + "]";
+		return "Match [tournamentId=" + tournamentId + ", year=" + year + ", region=" + region + ", team1=" + team1
+				+ ", team2=" + team2 + ", matchURL=" + matchURL + ", acsURL=" + acsURL + ", week=" + week + ", day="
+				+ day + ", game=" + game + "]";
 	}
 }

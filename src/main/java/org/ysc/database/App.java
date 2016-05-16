@@ -1,8 +1,5 @@
 package org.ysc.database;
 
-import org.hibernate.Transaction;
-import org.hibernate.Session;
-import org.hibernate.cfg.Configuration;
 import org.ysc.database.model.Match;
 import org.ysc.database.model.dao.MatchDAO;
 
@@ -12,6 +9,8 @@ import org.ysc.database.model.dao.MatchDAO;
  */
 public class App 
 {
+	//private static Logger logger = Logger.getLogger(App.class);
+	
     public static void main( String[] args )
     {
         Match match = createTestMatch();
