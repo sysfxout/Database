@@ -1,69 +1,78 @@
 package org.ysc.db;
 
-import org.ysc.database.model.FantasyPlayer;
-import org.ysc.database.model.Match;
-import org.ysc.database.model.dao.FantasyPlayerDAO;
-import org.ysc.database.model.dao.MatchDAO;
+import org.ysc.database.model.PlayerFantasyStats;
+import org.ysc.database.model.PlayerInfo;
+import org.ysc.database.model.dao.PlayerFantasyStatsDAO;
+import org.ysc.database.model.dao.PlayerInfoDAO;
 
 /**
  * Hello world!
  *
  */
-public class AppTest 
-{
+public class AppTest {
 	
-    public static void main( String[] args )
-    {
-       //testMatch();
-       testFantasyPlayer();
-    	System.exit(0);
-    }
-    
-    private static void testMatch(){
-    	 Match match = createTestMatch();
-         MatchDAO matchDAO = new MatchDAO();
-         matchDAO.create(match);
-    }
-    
-    private static void testFantasyPlayer(){
-    	FantasyPlayer fantasyPlayer = createTestFantasyPlayer();
-    	FantasyPlayerDAO fantasyPlayerDAO = new FantasyPlayerDAO();
-    	fantasyPlayerDAO.create(fantasyPlayer);
-    }
-    
-    private static Match createTestMatch(){
-        Match match = new Match();
-        match.setTournamentId("MSI");
-        match.setYear(16);
-        match.setRegion("NA");
-        match.setTeam1("RED");
-        match.setTeam2("BLUE");
-        match.setMatchURL("http://matchurl.com");
-        match.setAcsURL("http://acsurl.com");
-        match.setWeek(1);
-        match.setDay(1);
-        match.setGame(1);
-        match.initId();
-        return match;
-    }
-    
-    private static FantasyPlayer createTestFantasyPlayer(){
-    	FantasyPlayer fantasyPlayer = new FantasyPlayer();
-    	fantasyPlayer.setSeason("MSI16");
-    	fantasyPlayer.setRegion("NA");
-    	fantasyPlayer.setGame("W1D1G1");
-    	fantasyPlayer.setName("Test");
-    	fantasyPlayer.setChampion("ChampTest");
-    	fantasyPlayer.setPosition("pos");
-    	fantasyPlayer.setTeam("team");
-    	fantasyPlayer.setOpp("Op");
-    	fantasyPlayer.setResult("Win");
-    	fantasyPlayer.setTime("36:54");
-    	fantasyPlayer.setAd(30.3);
-    	fantasyPlayer.setDk(23.4);
-    	fantasyPlayer.seteSports(3.0);
-    	fantasyPlayer.setLink("link");
-    	fantasyPlayer.update();
-    	return fantasyPlayer;
-    }
+	private static String tournament = "MSI", year = "16", region = "NA";
+	private static int week = 1, day = 1, game = 1;
+	private static String name = "Test";
+	
+	public static void main(String[] args) {
+		testPlayerInfo();
+		testPlayerFantasyStats();
+		System.exit(0);
+	}
+
+	private static void testPlayerInfo() {
+		PlayerInfo playerInfo = createTestPlayerInfo();
+		PlayerInfoDAO playerInfoDAO = new PlayerInfoDAO();
+		playerInfoDAO.create(playerInfo);
+	}
+
+	private static PlayerInfo createTestPlayerInfo() {
+		PlayerInfo playerInfo = new PlayerInfo();
+		playerInfo.setTournament(tournament);
+		playerInfo.setYear(year);
+		playerInfo.setRegion(region);
+		playerInfo.setWeek(week);
+		playerInfo.setDay(day);
+		playerInfo.setGame(game);
+		playerInfo.setName(name);
+		playerInfo.setChampion("ChampTest");
+		playerInfo.setPosition("pos");
+		playerInfo.setTeam("team");
+		playerInfo.setOpp("Op");
+		playerInfo.setResult("Win");
+		playerInfo.setTime("36:54");
+		playerInfo.setMatchLink("matchLink");
+		playerInfo.setAcsLink("acsLink");
+		
+		playerInfo.update();
+		return playerInfo;
+	}
+	
+	private static void testPlayerFantasyStats(){
+		PlayerFantasyStats playerFantasyStats = createTestPlayerFantasyStats();
+		PlayerFantasyStatsDAO playerFantasyStatsDAO = new PlayerFantasyStatsDAO();
+		playerFantasyStatsDAO.create(playerFantasyStats);
+	}
+
+	private static PlayerFantasyStats createTestPlayerFantasyStats() {
+		PlayerFantasyStats playerFantasyStats = new PlayerFantasyStats();
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append(tournament);
+		sb.append(year);
+		sb.append("-"+region);
+		sb.append("-W"+week);
+		sb.append("D"+day);
+		sb.append("G"+game);
+		sb.append("-"+name);
+		playerFantasyStats.setId(sb.toString());
+		playerFantasyStats.setAd(1.0);
+		playerFantasyStats.setDk(2.0);
+		playerFantasyStats.seteSports(3.0);
+		
+		return playerFantasyStats;
+	}
+	
+	
 }
